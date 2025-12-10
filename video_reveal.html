@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Sequence Reveal - Final Surprise</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff; /* Alice Blue */
+            padding: 30px;
+        }
+
+        h1 {
+            color: #4b0082; /* Deep Purple */
+            margin-bottom: 40px;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-direction: column; 
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+        }
+
+        /* Styling for the interactive box (Size remains 450x300) */
+        .interactive-box {
+            width: 450px; 
+            height: 300px;
+            border: 4px solid #ff69b4; /* Hot Pink */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
+            background-color: #fff;
+        }
+
+        .interactive-box:hover {
+            transform: scale(1.03); 
+            box-shadow: 0 12px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Hide Box 2 initially */
+        #box2 {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        /* Image and Video styling (unchanged) */
+        .initial-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s;
+        }
+
+        .video-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none; 
+            background-color: #000;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay-label {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(255, 105, 180, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* NEW CSS for the Final Button */
+        #next-surprise-btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            margin-top: 40px;
+            background-color: #4b0082; /* Deep Purple */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            /* Initially Hidden */
+            display: none; 
+            opacity: 0;
+        }
+
+        #next-surprise-btn:hover {
+            background-color: #6a0dad; /* Lighter Purple */
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>✨ Click to Reveal Your Special Video! ✨</h1>
+    
+    <div class="gallery-container">
+        
+        <div class="interactive-box" id="box1"
+        onclick="showVideo('box1', 'video1', 1)">
+            <img class="initial-image"
+            src="C:\Users\DELL\Desktop\HTML\charu.jpg" alt="Surprise 1">
+            <div class="overlay-label">🎁 Exclusive!</div>
+
+            <div class="video-wrapper" id="video1">
+                <video controls id="video-element-1">
+                    <source src="C:\Users\DELL\Desktop\HTML\love3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="interactive-box" id="box2">
+            <img class="initial-image"
+            src="C:\Users\DELL\Desktop\HTML\atul.jpg" alt="Surprise 2">
+            <div class="overlay-label">💖 Just For You</div>
+
+            <div class="video-wrapper" id="video2">
+                <video controls id="video-element-2">
+                    <source src="C:\Users\DELL\Desktop\HTML\love4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="next-surprise-btn" onclick="goToNetflixNight()">
+        🌟 Kingdom Komedy: The Royal Netflix Night 👑
+    </button>
+
+    <script>
+        const videoElement1 = document.getElementById('video-element-1');
+        const videoElement2 = document.getElementById('video-element-2');
+        const box2 = document.getElementById('box2');
+        const nextButton = document.getElementById('next-surprise-btn');
+
+
+        /**
+         * Hides the image and shows the video player inside the container.
+         * @param {string} boxId - The ID of the parent interactive box.
+         * @param {string} videoId - The ID of the video wrapper.
+         * @param {number} videoNumber - 1 for video 1, 2 for video 2.
+         */
+        function showVideo(boxId, videoId, videoNumber) {
+            const box = document.getElementById(boxId);
+            const image = box.querySelector('.initial-image');
+            const videoWrapper = document.getElementById(videoId);
+            const videoElement = videoWrapper.querySelector('video');
+
+            // 1. Hide the image and label
+            image.style.display = 'none';
+            box.querySelector('.overlay-label').style.display = 'none';
+            
+            // 2. Show the video wrapper
+            videoWrapper.style.display = 'block';
+
+            // 3. Start playback 
+            videoElement.play().catch(error => {
+                console.log(`Autoplay for Video ${videoNumber} blocked. User needs to press play.`, error);
+            });
+
+            // 4. Set the 'ended' event listener
+            if (videoNumber === 1) {
+                videoElement.addEventListener('ended', revealSecondBox, { once: true });
+            } else if (videoNumber === 2) {
+                videoElement.addEventListener('ended', revealNextButton, { once: true });
+            }
+
+            // 5. Prevent repeated video loading if the user clicks the video area again
+            box.onclick = null; 
+        }
+
+        /**
+         * Reveals the second image box after the first video ends.
+         */
+        function revealSecondBox() {
+            // Make box2 visible and clickable (opacity transition handles the fade-in)
+            box2.style.opacity = 1;
+            box2.style.pointerEvents = 'auto';
+
+            // Set the onclick handler for the newly revealed box2, passing videoNumber 2
+            box2.setAttribute('onclick', "showVideo('box2', 'video2', 2)");
+
+            console.log("Video 1 ended. Box 2 is now visible and ready to click!");
+        }
+
+        /**
+         * Reveals the final surprise button after the second video ends.
+         */
+        function revealNextButton() {
+            // Make the button visible (using block display and opacity for smooth fade-in)
+            nextButton.style.display = 'block';
+            setTimeout(() => {
+                nextButton.style.opacity = 1;
+            }, 10); // Small delay to trigger CSS transition
+
+            console.log("Video 2 ended. Final surprise button is now visible!");
+        }
+
+        /**
+         * Action for the final button click: Redirect to the Netflix Night page.
+         */
+        function goToNetflixNight() {
+            // Stop videos before navigating
+            videoElement1.pause();
+            videoElement2.pause();
+            
+            window.location.href = 'netflix_night.html';
+        }
+    </script>
+
+</body>
+</html>

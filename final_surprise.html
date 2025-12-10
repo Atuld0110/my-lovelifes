@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>फक्त तुझ्यासाठी 💖</title>
+    <style>
+        /* General Body Styling and Starry Background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0d26; /* Dark Blue/Night Sky Background */
+            color: #f0f8ff; /* Alice Blue Text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Star Field Container for Flying Stars */
+        .star-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: 0;
+        }
+
+        /* Star Styling and Animation */
+        .star {
+            position: absolute;
+            color: #fffacd; 
+            font-size: 1.5em; 
+            opacity: 0;
+            animation: fly-and-blink 15s linear infinite;
+        }
+
+        @keyframes fly-and-blink {
+            0% { transform: translateY(-100vh) translateX(0); opacity: 0; filter: blur(0px); }
+            50% { opacity: 1; filter: blur(0px); }
+            100% { transform: translateY(100vh) translateX(50vw); opacity: 0; filter: blur(5px); }
+        }
+        
+        /* Dancing Heart Animation */
+        .dancing-heart {
+            font-size: 5em;
+            margin: 20px 0;
+            animation: heart-beat 1s infinite alternate; 
+            display: inline-block;
+            z-index: 2; 
+            position: relative;
+        }
+
+        @keyframes heart-beat {
+            0% { transform: scale(1) rotate(0deg); color: #ff69b4; }
+            100% { transform: scale(1.2) rotate(5deg); color: #ff1493; text-shadow: 0 0 10px rgba(255, 20, 147, 0.7); }
+        }
+
+        /* Music Button Styling */
+        #music-button {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff69b4; 
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s;
+            z-index: 10; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #music-button:hover { background-color: #ff1493; transform: translateX(-50%) scale(1.05); }
+        #music-button:active { transform: translateX(-50%) scale(0.98); }
+
+        /* Poem Container */
+        .poem-container {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 90%;
+            margin-top: 80px; 
+            margin-bottom: 20px;
+            border: 3px solid #ff69b4; 
+            color: #4b0082; 
+            z-index: 1; 
+            position: relative;
+        }
+
+        /* ROSE PAGE STYLING */
+        #rose-page {
+            background-color: rgba(255, 255, 255, 0.15); 
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px 5px #ff1493;
+            max-width: 500px;
+            width: 90%;
+            z-index: 1;
+            position: relative;
+            display: none; /* Initially hidden */
+            border: 4px solid #ff69b4;
+            color: #ffe066;
+            cursor: pointer; 
+            transition: transform 0.3s ease;
+        }
+
+        #rose-page:hover {
+            transform: scale(1.05);
+        }
+
+        #rose-flower {
+            font-size: 10em; /* BIG ROSE */
+            display: block;
+            margin-bottom: 20px;
+            animation: pulse-rose 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-rose {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* FINAL PAGE STYLING */
+        #final-page {
+            background-color: #4b0082; /* Indigo/Purple background */
+            color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px #ff69b4;
+            max-width: 550px;
+            width: 90%;
+            z-index: 1;
+            position: relative;
+            display: none; /* Initially hidden */
+            font-size: 1.8em;
+            line-height: 1.5;
+        }
+
+        h1 {
+            color: #ff1493; 
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffc0cb; 
+            padding-bottom: 10px;
+        }
+
+        .poem-line {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            white-space: pre-wrap; 
+        }
+        
+        .happy-emojis {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: pulse-emojis 2s infinite;
+            z-index: 2;
+            position: relative;
+        }
+
+        @keyframes pulse-emojis {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* New Button Style for Final Redirect */
+        #video-reveal-btn {
+            background-color: #00bcd4; /* Cyan/Teal */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, transform 0.2s;
+            display: none; /* Initially hidden */
+        }
+        
+        #video-reveal-btn:hover {
+            background-color: #0097a7;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="star-field" id="star-field"></div>
+
+    <button id="music-button">🎵 माझ्यासाठी गाणं वाजव 🎵</button>
+
+    <div class="happy-emojis" id="emojis-1">😊🥰😍</div>
+
+    <div class="dancing-heart" id="heart-1">💖</div>
+
+    <div class="poem-container" id="poem-container">
+        <h1>माझ्या प्रियेसाठी (For My Love)</h1>
+        
+        <div class="poem-line">
+            "तू माझ्या जीवनातील एक सुंदर स्वप्न आहेस,"<br>
+            "प्रत्येक क्षण तुझ्यासोबतचा, एक गोड आठवण आहे."<br>
+            "तुझ्या हास्याने फुलतो माझा दिवस,"<br>
+            "तू आहेस म्हणून, जीवन किती छान आहे!"<br>
+            <br>
+            "हातात हात घेऊन चालण्याची ती ओढ,"<br>
+            "तुझ्या डोळ्यांत पाहताना, मिळते एक नवी जोड."<br>
+            "तू आहेस माझी प्रेमकथा,"<br>
+            "फक्त तुझ्यासाठीच आहे ही कविता."<br>
+            <br>
+            "मनातल्या प्रत्येक विचारांना तू देतेस दिशा,"<br>
+            "तूच आहेस माझ्या प्रत्येक प्रश्नाची आशा."<br>
+            "तुझा सहवास म्हणजे आनंदाची बरसात,"<br>
+            "तुझ्याशिवाय नाही मला दुसरी साथ."<br>
+            <br>
+            "चांदण्यातली शांतता, अन् तुझं ते बोलणं,"<br>
+            "आयुष्यातलं हे नातं, कधीही न संपणारं!"<br>
+            "माझ्या हृदयाच्या प्रत्येक ठोक्यावर तुझं नाव आहे,"<br>
+            "हे प्रेम, माझ्या आयुष्याचा खरा ठेवा आहे."
+        </div>
+        <p style="margin-top: 30px; font-style: italic; color: #ff69b4;">- From Your Bacchu</p>
+    </div>
+
+    <div id="rose-page">
+        <span id="rose-flower">🌹</span> 
+        <p style="font-size: 1.5em; font-weight: bold; margin-top: 15px;">
+            Please accept me<br>
+            (कृपया माझा स्वीकार करा)
+        </p>
+        <p style="font-size: 0.9em; color: #ffc0cb; margin-top: 10px;">(Click the Rose to confirm!)</p>
+    </div>
+    
+    <div id="final-page">
+        <p>💖 YES! THANK YOU! 💖</p>
+        <p>तू माझ्या आयुष्यातला सर्वात मोठा आनंद आहेस.</p>
+        <p style="font-size: 0.7em; margin-top: 15px;">(You are the greatest joy in my life.)</p>
+        
+        <button id="video-reveal-btn" onclick="goToVideoReveal()">
+            🎥 End of Surprise? Click for Video Reveal! 🎬
+        </button>
+        </div>
+    
+    <audio id="my-song">
+        <source src="C:\Users\DELL\Desktop\HTML\Marathi Song Lyrical Whatsapp Status _ Tu Hi Re Maza Mitwa Song Lyrical Status _ Rutvik Creations [ElGgGEsreCA] (1).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // --- Element References ---
+        const musicButton = document.getElementById('music-button');
+        const mySong = document.getElementById('my-song');
+        const poemContainer = document.getElementById('poem-container');
+        const rosePage = document.getElementById('rose-page'); 
+        const finalPage = document.getElementById('final-page'); 
+        const heartElement = document.getElementById('heart-1');
+        const emojisElement = document.getElementById('emojis-1');
+        const videoRevealBtn = document.getElementById('video-reveal-btn');
+        let isPlaying = false;
+
+        // --- Music Player Script ---
+        function togglePlay() {
+            if (isPlaying) {
+                mySong.pause();
+                musicButton.textContent = '🎵 माझ्यासाठी गाणं वाजव 🎵';
+                mySong.removeEventListener('ended', transitionToRosePage);
+            } else {
+                mySong.play().catch(error => {
+                    console.error("Audio playback failed:", error);
+                    alert("गाणं वाजवण्यास अडचण येत आहे. (Could not play the song.)");
+                });
+                // Remove text, replace with playing emoji
+                musicButton.textContent = '🎶 ऐकत आहे... (Listening...) 🎶'; 
+                
+                // Transition to Rose Page when the song ends
+                mySong.addEventListener('ended', transitionToRosePage, { once: true });
+            }
+            isPlaying = !isPlaying;
+        }
+        musicButton.addEventListener('click', togglePlay);
+
+        // --- Transition Functions ---
+
+        // 1. Song End -> Rose Page
+        function transitionToRosePage() {
+            // Pause music just in case 'ended' listener didn't stop it (e.g., manual pause right before end)
+            mySong.pause();
+            
+            // Hide Page 1 elements
+            poemContainer.style.display = 'none';
+            heartElement.style.display = 'none';
+            emojisElement.style.display = 'none';
+            musicButton.style.display = 'none'; 
+
+            // Show Page 2 (Rose Page)
+            rosePage.style.display = 'flex';
+            rosePage.style.flexDirection = 'column';
+            rosePage.style.alignItems = 'center';
+            rosePage.style.justifyContent = 'center';
+
+            // Now, set up the click listener for the rose
+            rosePage.addEventListener('click', transitionToFinalPage, { once: true });
+        }
+
+        // 2. Rose Click -> Final Page
+        function transitionToFinalPage() {
+            rosePage.style.display = 'none'; // Hide Rose Page
+            finalPage.style.display = 'flex'; // Show Final Page
+            finalPage.style.flexDirection = 'column';
+            finalPage.style.alignItems = 'center';
+            finalPage.style.justifyContent = 'center';
+            
+            // Show the final video button after a small delay
+            setTimeout(() => {
+                videoRevealBtn.style.display = 'block';
+            }, 3000); // Wait 3 seconds
+        }
+        
+        // 3. Final Button Click -> Video Reveal Page
+        function goToVideoReveal() {
+            // Stop any lingering music before redirect
+            mySong.pause();
+            // Redirect to the final page
+            window.location.href = 'video_reveal.html';
+        }
+
+
+        // --- Star Generator Script ---
+        const starField = document.getElementById('star-field');
+        const starCount = 50; 
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.textContent = '✨';
+            
+            star.style.left = `${Math.random() * 100}vw`; 
+            star.style.animationDelay = `${Math.random() * 15}s`; 
+            star.style.animationDuration = `${10 + Math.random() * 10}s`; 
+            
+            starField.appendChild(star);
+        }
+
+    </script>
+
+</body>
+</html>

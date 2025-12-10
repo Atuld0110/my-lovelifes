@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>माझ्या भावना | My Feelings (Pink Theme)</title>
+    <style>
+        body {
+            font-family: 'Arial Unicode MS', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            /* Romantic Pink Gradient Background */
+            background: linear-gradient(to bottom, #ffe4e1, #ffc0cb); 
+            color: #444;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 90%;
+            padding: 40px;
+            background: #ffffff; /* White card background */
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 69, 0, 0.3);
+        }
+
+        /* Marathi Tagline Styling */
+        .tagline {
+            font-size: 1.4em;
+            color: #8a2be2; /* Blue Violet */
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 3px solid #ff69b4; /* Deep Pink Border */
+            border-radius: 10px;
+            font-weight: bold;
+            background-color: #fff0f5; /* Lavender Blush */
+        }
+
+        h1 {
+            color: #ff1493; /* Deep Pink */
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Special Marathi Message Card */
+        .message-card {
+            background-color: #f0f8ff; /* Alice Blue - soft contrast */
+            color: #4b0082; /* Indigo/Deep Purple */
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .message-card p {
+            font-size: 1.6em;
+            line-height: 1.8;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* FINAL ACTION BUTTON STYLING */
+        #final-action-button {
+            padding: 15px 35px;
+            font-size: 1.4em;
+            margin-top: 40px;
+            background-color: #ff4500; /* Orange Red */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        #final-action-button:hover {
+            background-color: #ff6347; /* Tomato */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="tagline">
+            "तू रागावल्यावर माझ्या मनात काय चालतं"
+        </div>
+
+        <h1> 💖</h1>
+
+        <div class="message-card">
+            <p>
+                <strong>माझे प्रेम,</strong>
+            </p>
+            <p>
+                जेव्हा तू रागावतेस, तेव्हा माझ्या मनात खूप दुःख होतं आणि सगळं शांत वाटू लागतं. मला लगेच वाटतं की मी तुला कसं समजावू आणि आपल्यातले हे अंतर कसं कमी करू.
+            </p>
+            <p>
+                तू माझ्यासाठी खूप महत्त्वाची आहेस. फक्त सांग, मी काय करू? तुझ्या चेहऱ्यावरचा हसू मला परत बघायचा आहे.
+            </p>
+        </div>
+
+        
+
+        <button id="final-action-button" onclick="goToFinalMessage()">
+            💌 A Message For My Bachha (शेवटचा संदेश) 🥺
+        </button>
+
+    </div>
+
+    <script>
+        /**
+         * Redirects to the final message page.
+         */
+        function goToFinalMessage() {
+            // This is the target page filename
+            window.location.href = 'pillu.html'; 
+        }
+    </script>
+
+</body>
+</html>

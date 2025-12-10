@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Charul's World! ✨</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 600px;
+        }
+
+        h1 {
+            color: #ff6347;
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h2 {
+            color: #4682b4;
+            font-size: 1.5em;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Styles for Your Image */
+        #my-image {
+            width: 100%; 
+            max-width: 350px; 
+            height: auto;
+            border-radius: 50%; /* Makes the image round */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer; /* Indicates it's clickable */
+            margin: 20px auto;
+            border: 5px solid #ff9900;
+            transition: transform 0.2s;
+            display: block; 
+        }
+
+        #my-image:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        /* Hidden message style */
+        #secret-message {
+            color: #e91e63;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 15px 0;
+            opacity: 0; /* Starts hidden */
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Song Button Style */
+        #song-btn {
+            background-color: #00bcd4; /* Cyan/Blue for audio */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin: 10px 0; /* Space it out */
+            transition: background-color 0.3s, transform 0.2s;
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            margin: 15px auto;
+        }
+
+        #song-btn:hover {
+            background-color: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        /* Surprise Button Style: Centered and Initially Hidden */
+        #surprise-btn {
+            display: none; /* Hide initially */
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 25px;
+            display: block;
+            width: 50%;
+            max-width: 300px;
+            margin: 25px auto 0 auto; 
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #surprise-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Welcome Bachhu!</h1>
+        <h2>You are now in Charul's World</h2>
+        
+        <img 
+            id="my-image" 
+            src="C:\Users\DELL\Desktop\HTML\my_photo.jpg" 
+            alt="My Photo" 
+            onclick="imageClicked()"
+        >
+        
+        <p id="secret-message">I love you Pillu ❤️</p>
+
+        <button id="song-btn" onclick="playWelcomeSong()">
+            Panda Say Click on ME 🎶
+        </button>
+
+        <button id="surprise-btn" onclick="window.location.href='love_language_quiz.html'">
+            See the Surprise! 🎁
+        </button>
+
+    </div>
+
+    <audio id="welcome-audio" src="C:\Users\DELL\Desktop\HTML\welcome_sound.mp3.mp3" preload="auto"></audio>
+
+ <script>
+        const messageElement = document.getElementById('secret-message');
+        const audioElement = document.getElementById('welcome-audio');
+        const songButton = document.getElementById('song-btn');
+        const surpriseButton = document.getElementById('surprise-btn');
+
+        // KEY CHANGE: Modified to also trigger the song playback.
+        function imageClicked() {
+            // 1. Show the secret message
+            messageElement.style.opacity = '1';
+            
+            // 2. Start the song if it's paused
+            if (audioElement.paused) {
+                // We call the function that handles playback logic and button text updates
+                playWelcomeSong(); 
+            }
+        }
+
+        // Dedicated to playing/pausing the song
+        function playWelcomeSong() {
+            if (audioElement.paused) {
+                // Hide the surprise button if the user clicks replay before it finishes
+                surpriseButton.style.display = 'none'; 
+                
+                audioElement.currentTime = 0; // Rewind to start
+                audioElement.play().then(() => {
+                    // Update button text to indicate playing
+                    songButton.textContent = '🎶 Playing...'; 
+                }).catch(error => {
+                    console.error("Audio playback error:", error);
+                    songButton.textContent = 'Error playing audio!';
+                });
+            } else {
+                audioElement.pause();
+                songButton.textContent = ' Panda Say Click On Me 🎶';
+            }
+        }
+        
+        // Event listener to show the surprise button when the song ends
+        audioElement.addEventListener('ended', () => {
+            surpriseButton.style.display = 'block';
+            songButton.textContent = '🎵 Replay Song';
+        });
+        
+ </script>
+
+</body>
+</html>

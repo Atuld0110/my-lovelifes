@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Message For My Bachha</title>
+    <style>
+        /* CSS for the design */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #fce4ec; /* Soft Pink Background */
+            color: #4a148c; /* Deep Purple Text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff; /* White card */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            border: 5px solid #ff80ab; /* Hot Pink Border */
+        }
+
+        h1 {
+            color: #d81b60; /* Ruby Red Heading */
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 2px solid #ff80ab;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #880e4f;
+            font-size: 2em;
+            margin-top: 1.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #880e4f; /* Darker accent */
+            display: block;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        /* Song Player Styling */
+        .song-player {
+            margin-top: 30px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #ffebee; /* Lighter Pink for player */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px dashed #ff80ab;
+        }
+
+        .song-player audio {
+            width: 100%; /* Make audio player fill its container */
+        }
+
+        .heart-emoji {
+            font-size: 4em;
+            animation: pulse 1.5s infinite alternate; /* Simple heart animation */
+            display: block;
+            margin: 20px auto 10px;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        
+        /* New Button Styling */
+        .end-button-container {
+            margin-top: 30px;
+            /* Hidden by default, shown by JavaScript */
+            display: none; 
+        }
+
+        .end-button {
+            background-color: #d81b60; /* Ruby Red button */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none; /* For the link */
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .end-button:hover {
+            background-color: #b71c4c;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <span class="heart-emoji">💖</span>
+
+    <div class="container">
+        <h1>For My Dearest Bachha</h1>
+        
+        <p>My dearest **bachha**, <span class="highlight">You are the most unexpected, beautiful gift my heart has ever received.</span> Before you, my life was a melody waiting for its harmony. Now, every day is a breathtaking symphony, filled with light, laughter, and a profound sense of *home*.</p>
+        
+        <p><span class="highlight">Thank you for walking into my life.</span> Thank you for choosing me. You didn't just step into my world; you transformed it into something magical.</p>
+        
+        <p>I don't just love you, my love. I cherish the peace you bring, the future you promise, and the incredible person you are.</p>
+        
+        <div class="song-player">
+            <p style="color: #d81b60; font-weight: bold; margin-bottom: 5px;">A Song for You:</p>
+            <audio controls id="messageSong">
+                <source src="C:\Users\DELL\Desktop\HTML\Tu Hai Toh Dil Dhadakta Hai.mp3" type="audio/mpeg">
+                
+            </audio>
+        </div>
+
+        <h2>**I Love You.**</h2>
+        
+        <div class="end-button-container" id="endButtonContainer">
+            <a href="lastpage.html" class="end-button">Finished? Continue &rarr;</a>
+        </div>
+        
+    </div>
+
+    <script>
+        // 1. Get the audio element and the button container
+        const audioPlayer = document.getElementById('messageSong');
+        const buttonContainer = document.getElementById('endButtonContainer');
+
+        // 2. Listen for the 'ended' event on the audio player
+        audioPlayer.onended = function() {
+            // 3. When the song finishes, make the button visible
+            buttonContainer.style.display = 'block';
+        };
+    </script>
+
+</body>
+</html>

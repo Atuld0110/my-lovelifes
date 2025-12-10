@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Very Important Question!</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fce4ec; /* Light Pink Background */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden; /* Hide hearts/road outside the screen boundary */
+        }
+        #proposal-container, #car-page {
+            background-color: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10; /* Ensure content is above the hearts and road */
+            transition: opacity 1s, transform 1s;
+        }
+        h1 {
+            color: #d81b60; /* Deep Pink */
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        p {
+            font-size: 1.2em;
+            color: #4a148c; /* Purple text for emphasis */
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        #yes-btn {
+            background-color: #4caf50; /* Green */
+            color: white;
+            font-weight: bold;
+        }
+        #yes-btn:hover {
+            background-color: #43a047;
+            transform: scale(1.05);
+        }
+        #no-btn-container {
+            position: relative;
+            height: 50px;
+            width: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #no-btn {
+            background-color: #f44336; /* Red */
+            color: white;
+            position: absolute;
+            transition: all 0.5s ease;
+        }
+        #response-message {
+            margin-top: 20px;
+            font-size: 3em;
+            color: #ff4081; /* Accent Pink */
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #car-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            min-width: 400px; /* Adjust as needed */
+            position: relative; /* Context for absolute positioning of car/road */
+            overflow: hidden; /* Important for animation containment */
+        }
+        #car-btn {
+            background-color: #ff9800; /* Orange */
+            color: white;
+            font-size: 1.5em;
+            padding: 20px 40px;
+            z-index: 15; /* Above road/car */
+        }
+        #car-btn:hover {
+            background-color: #fb8c00;
+            transform: scale(1.1);
+        }
+        #next-page-btn {
+            display: none;
+            background-color: #17a2b8; /* Cyan/Teal */
+            color: white;
+            font-size: 1.2em;
+            padding: 15px 35px;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 15;
+        }
+
+        /* --- Road and Car Animation Styles --- */
+
+        /* Container for the road, positioned at the bottom of the Car Page */
+        #road-container {
+            position: absolute;
+            bottom: -50px; /* Position slightly off-screen for effect */
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: #333; /* Road color */
+            overflow: hidden;
+            z-index: 8; /* Below content, above background */
+            display: none; /* KEY: Hidden until driving starts */
+        }
+
+        /* Dashed lane lines */
+        .lane-line {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 5px;
+            background-color: #fff; /* White dashed line */
+            width: 50px;
+            margin: 0 10px;
+            animation: moveLine 1s linear infinite;
+        }
+
+        /* Car icon/emoji */
+        #driving-car {
+            position: absolute;
+            bottom: 25px; /* Adjust to sit on the road */
+            left: 50%; /* Start in the middle */
+            transform: translateX(-50%);
+            font-size: 4em;
+            display: none; /* KEY: Hidden until driving starts */
+            z-index: 10;
+        }
+
+        /* CSS Animation for the road lines */
+        @keyframes moveLine {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-120px); /* Move one line width + gap */
+            }
+        }
+        
+        /* Heart Animation Styles (unchanged) */
+        .heart {
+            position: absolute;
+            top: -10px;
+            font-size: 15px;
+            animation: fall linear infinite;
+            z-index: 5;
+            pointer-events: none;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <audio id="yesSong" src="C:\Users\DELL\Desktop\HTML\Zara Sa (Piano Lori).mp3" preload="auto"></audio>
+    <audio id="carSong" src="C:\Users\DELL\Desktop\HTML\car_theme_song.mp3 - Copy.mp3" preload="auto"></audio>
+
+    <div id="proposal-container">
+        <h1>My Dearest Buggu!</h1>
+        <p>There's something I really want to ask you:</p>
+        <p style="font-size: 1.8em; font-weight: bold;">Will you be my girlfriend?</p>
+        
+        <div class="button-group">
+            <button id="yes-btn">Yes</button>
+            <div id="no-btn-container">
+                <button id="no-btn">No</button>
+            </div>
+        </div>
+
+        <div id="response-message">I LOVE YOU!!! 🥰</div>
+    </div>
+
+    <div id="car-page">
+        <h1>Thank you for saying YES!</h1>
+        <p>Now, let's celebrate and go for a drive!</p>
+        <button id="car-btn">🚘 Press Here to Start the Car 🎶</button>
+        
+        <div id="road-container">
+            </div>
+        <span id="driving-car">🚗</span> <button id="next-page-btn" onclick="goToFinalPage()">
+            ➡️ फक्त तुझ्यासाठी (Just For You) 🎁
+        </button>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const proposalContainer = document.getElementById('proposal-container');
+        const responseMessage = document.getElementById('response-message');
+        const carPage = document.getElementById('car-page');
+        const carBtn = document.getElementById('car-btn');
+        const yesSong = document.getElementById('yesSong');
+        const carSong = document.getElementById('carSong');
+        const nextPageBtn = document.getElementById('next-page-btn'); 
+        const drivingCar = document.getElementById('driving-car');
+        const roadContainer = document.getElementById('road-container');
+        const heartColors = ['#ff4081', '#ff1744', '#d500f9', '#448aff'];
+
+        let heartInterval;
+
+        // --- Utility Function: Generate Road Lines ---
+        function generateRoadLines() {
+            // Clear existing lines
+            roadContainer.innerHTML = ''; 
+            // Generate enough lines to cover the container width + one extra for seamless looping
+            const containerWidth = roadContainer.offsetWidth;
+            const lineHeight = 5; // Matches CSS
+            const lineWidth = 50; // Matches CSS
+            const lineGap = 10; // Matches CSS margin
+            const totalLineSpace = lineWidth + lineGap * 2;
+            const numberOfLines = Math.ceil(containerWidth / totalLineSpace) + 2; 
+
+            for (let i = 0; i < numberOfLines; i++) {
+                const line = document.createElement('div');
+                line.classList.add('lane-line');
+                // Calculate initial position to ensure seamless loop
+                line.style.left = `${i * totalLineSpace}px`; 
+                roadContainer.appendChild(line);
+            }
+        }
+
+
+        // --- Heart Falling Animation Function ---
+        function createHeart() {
+            const heart = document.createElement('span');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️'; 
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.color = heartColors[Math.floor(Math.random() * heartColors.length)];
+            const duration = Math.random() * 5 + 3;
+            heart.style.animationDuration = duration + 's';
+            heart.style.animationDelay = Math.random() * 1 + 's'; 
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+
+        // 1. Make the 'No' button run away on hover (unchanged)
+        const noBtnContainer = document.getElementById('no-btn-container');
+        noBtn.mouseOverHandler = () => {
+            const x = Math.random() * (noBtnContainer.offsetWidth - noBtn.offsetWidth);
+            const y = Math.random() * (noBtnContainer.offsetHeight * 2 - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        };
+        noBtn.addEventListener('mouseover', noBtn.mouseOverHandler);
+
+        // 2. Logic for 'Yes' button click
+        yesBtn.addEventListener('click', () => {
+            heartInterval = setInterval(createHeart, 150);
+            noBtn.removeEventListener('mouseover', noBtn.mouseOverHandler);
+            
+            document.querySelector('.button-group').style.display = 'none';
+            proposalContainer.querySelector('p:nth-of-type(2)').style.display = 'none';
+            responseMessage.style.display = 'block';
+            
+            yesSong.play().catch(error => {
+                console.error("Autoplay failed for 'yesSong':", error);
+                alert("Please click anywhere on the page to allow the music to play! (Browser restriction)");
+            });
+
+            yesSong.addEventListener('ended', transitionToCarPage, { once: true });
+        });
+
+        // Function to handle the transition from Proposal to Car page
+        function transitionToCarPage() {
+            clearInterval(heartInterval);
+            proposalContainer.style.display = 'none';
+            carPage.style.display = 'flex';
+            // Important: Call the function to set up road lines once the car page is visible
+            generateRoadLines(); 
+        }
+
+        // --- Car Page Logic ---
+
+        // 3. Logic for 'Car' button click (starts second song and animation)
+        carBtn.addEventListener('click', () => {
+            yesSong.pause();
+            yesSong.currentTime = 0;
+
+            // Start the driving animation
+            roadContainer.style.display = 'block';
+            drivingCar.style.display = 'block';
+
+            carSong.play().catch(error => {
+                console.error("Autoplay failed for 'carSong':", error);
+                alert("Please click anywhere on the page to allow the music to play! (Browser restriction)");
+            });
+
+            carBtn.textContent = '🎶 Vroom Vroom! Enjoy the ride! 🚗';
+            carBtn.disabled = true;
+            carBtn.style.backgroundColor = '#4caf50';
+            
+            carSong.addEventListener('ended', showNextPageButton, { once: true });
+        });
+
+        // Function: Show the final button when the second song ends
+        function showNextPageButton() {
+            carSong.pause();
+            carSong.currentTime = 0;
+            // Stop the driving animation
+            roadContainer.style.display = 'none';
+            drivingCar.style.display = 'none';
+
+            nextPageBtn.style.display = 'block';
+        }
+
+        // Function: Handle the final redirect
+        function goToFinalPage() {
+            carSong.pause();
+            yesSong.pause();
+            window.location.href = 'final_surprise.html';
+        }
+        
+    </script>
+</body>
+</html>

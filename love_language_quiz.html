@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Secret Love Language Quiz</title>
+    <style>
+        /* CSS for Romantic Styling */
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffdde1 0%, #ffafbd 100%); /* Soft gradient background */
+            color: #4A148C; /* Deep Purple Text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3); /* Soft pink/orange shadow */
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            border: 5px solid #E91E63; /* Deep Pink Border */
+        }
+
+        h1 {
+            color: #D81B60; /* Deep Pink Title */
+            margin-bottom: 25px;
+            font-family: 'Brush Script MT', cursive; /* Romantic font for title */
+            font-size: 2.5em;
+        }
+
+        p {
+            color: #880E4F; /* Darker Pink Subtext */
+        }
+
+        /* Input Styles */
+        #password-input, .answer-input {
+            padding: 12px;
+            width: 90%;
+            margin: 15px 0;
+            border: 3px solid #FF80AB;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Quiz Screen Styles */
+        #quiz-screen {
+            display: none;
+            text-align: left;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px dashed #FFC1D8;
+            border-radius: 15px;
+            background-color: #FFF0F5; /* Lavender Blush */
+        }
+
+        .question p {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #880E4F;
+            margin-bottom: 15px;
+        }
+
+        /* Button Styles */
+        button {
+            background-color: #E91E63; /* Pink Button */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #C2185B; /* Darker Pink on Hover */
+            transform: scale(1.05);
+        }
+
+        /* Result Screen Styles */
+        #result-screen {
+            display: none;
+            text-align: center;
+        }
+
+        #score-message {
+            font-size: 1.6em;
+            color: #880E4F;
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #FFC0CB; /* Pink background for message */
+            border-radius: 10px;
+        }
+        
+        /* Style for the Final Next Button */
+        #final-next-btn {
+            background-color: #4CAF50; /* Green color for the final step */
+            margin-top: 40px;
+            padding: 15px 35px;
+            font-size: 20px;
+            border-radius: 30px;
+        }
+        
+        #final-next-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Hidden audio player style */
+        #my-audio {
+            display: none; /* Keep the audio player invisible */
+        }
+    </style>
+</head>
+<body>
+
+<audio id="my-audio" loop>
+    <source src="C:\Users\DELL\Desktop\HTML\our_love_song.mp3.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+    <div id="password-screen">
+        <h1>🔐 A Heart's Secret</h1>
+        <p>This quiz holds the keys to my heart. The word starts with 'B' and ends with 'U'.</p>
+        <input type="password" id="password-input" placeholder="Enter Our Special Password">
+        <button onclick="checkPassword()">Unlock Quiz</button>
+        <p id="password-error" style="color: red; margin-top: 15px; display: none;">Incorrect Code! Only a true love knows this.</p>
+    </div>
+
+    <div id="quiz-screen">
+        <h1>💞 Our Love Language Quiz</h1>
+        <p style="font-size: 1.1em; color: #D81B60;">Type your single-sentence answer for each question.</p>
+
+        <div class="question">
+            <p>1. What makes me happiest when I see it?</p>
+            <input type="text" id="q1_answer" class="answer-input" placeholder="Enter your answer...">
+        </div>
+
+        <div class="question">
+            <p>2. There's a habit of yours that I don't like, but you still often do it. What is it?</p>
+            <input type="text" id="q2_answer" class="answer-input" placeholder="Enter your answer...">
+        </div>
+
+        <div class="question">
+            <p>3. A word or short phrase that we both use a lot?</p>
+            <input type="text" id="q3_answer" class="answer-input" placeholder="Enter your answer...">
+        </div>
+
+        <button onclick="submitQuiz()">See the Results of Our Love!</button>
+    </div>
+
+    <div id="result-screen">
+        <h1>🎉 Love Score Revealed!</h1>
+        <p>This shows how well you know the little details of my heart...</p>
+        <div id="score-message"></div>
+        <p style="margin-top: 30px; font-style: italic; color: #D81B60; font-size: 1.1em;">Always and forever.</p>
+        
+        <button id="final-next-btn" onclick="window.location.href='final_question.html'">
+            Continue to The Important Question ➡️
+        </button>
+        </div>
+
+</div>
+
+<script>
+    // JavaScript for Logic
+
+    // --- Configuration ---
+    const CORRECT_PASSWORD = "Bachha"; 
+    
+    // *Set the correct answers here.*
+    const correctAnswers = {
+        q1_answer: 'smile',
+        q2_answer: 'fast food',
+        q3_answer: 'i love you'
+    };
+    // -----------------------
+
+    function checkPassword() {
+        const passwordInput = document.getElementById('password-input').value.trim();
+        const errorElement = document.getElementById('password-error');
+        const audio = document.getElementById('my-audio'); // Get the audio element
+
+        // Convert both input and correct password to lowercase for case-insensitive check
+        if (passwordInput.toLowerCase() === CORRECT_PASSWORD.toLowerCase()) {
+            // Password is correct!
+            document.getElementById('password-screen').style.display = 'none';
+            document.getElementById('quiz-screen').style.display = 'block';
+            errorElement.style.display = 'none';
+            
+            // ⭐ Start playing the music immediately after the button click!
+            audio.play().catch(error => {
+                // This catch handles instances where the browser prevents autoplay (e.g., mobile)
+                console.log("Audio play attempt failed:", error);
+                // Optionally add a user prompt here if audio fails to play
+            });
+            
+        } else {
+            // Password is incorrect
+            errorElement.style.display = 'block';
+            document.getElementById('password-input').value = '';
+            
+            // Stop and rewind music if the user tries again
+            audio.pause();
+            audio.currentTime = 0; 
+        }
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        const totalQuestions = Object.keys(correctAnswers).length;
+
+        // Function to check if the user's answer contains the correct keyword(s)
+        function checkAnswer(userAnswer, correctAnswer) {
+            const user = userAnswer.toLowerCase().trim();
+            const correct = correctAnswer.toLowerCase().trim();
+            
+            // Check for exact match
+            if (user === correct) return true;
+
+            // Check for key phrase: 'i love you' (allows minor variations)
+            if (correct === 'i love you' && (user.includes('love') && user.includes('you'))) {
+                return true;
+            }
+            
+            // Check for key words (e.g., 'smile' is in 'your beautiful smile')
+            if (user.includes(correct)) return true;
+
+            // Allow 'smiling' for 'smile'
+            if (correct === 'smile' && user.includes('smiling')) {
+                return true;
+            }
+
+            // Allow 'junk food' for 'fast food'
+            if (correct === 'fast food' && user.includes('junk food')) {
+                return true;
+            }
+            
+            return false;
+        }
+
+        // Check Q1
+        const q1User = document.getElementById('q1_answer').value;
+        if (checkAnswer(q1User, correctAnswers.q1_answer)) {
+            score++;
+        }
+
+        // Check Q2
+        const q2User = document.getElementById('q2_answer').value;
+        if (checkAnswer(q2User, correctAnswers.q2_answer)) {
+            score++;
+        }
+
+        // Check Q3
+        const q3User = document.getElementById('q3_answer').value;
+        if (checkAnswer(q3User, correctAnswers.q3_answer)) {
+            score++;
+        }
+
+        // ⭐ Stop the music when the quiz is submitted
+        document.getElementById('my-audio').pause();
+        
+        // Display results
+        const percentage = (score / totalQuestions) * 100;
+        let message = `You scored **${score} out of ${totalQuestions}** (${percentage.toFixed(0)}%).`;
+        
+        if (score === totalQuestions) {
+            message += "<br><br>🎯 **PERFECT SCORE!** You possess intimate knowledge of the heart's details.";
+        } else if (score >= totalQuestions - 1) {
+            message += "<br><br>🌟 **Almost Perfect!** You are very perceptive and attentive to the small things.";
+        } else {
+            message += "<br><br>💡 **Great Job!** Continue paying attention to the details. The connection is strong.";
+        }
+
+        document.getElementById('score-message').innerHTML = message;
+        
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
